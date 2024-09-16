@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -16,9 +18,11 @@ class HomePageWithGetX extends StatefulWidget {
 
 class _HomePageWithGetXState extends State<HomePageWithGetX> {
   final HomePageController _controller = Get.put(HomePageController());
-
+  int count = 0;
   @override
   Widget build(BuildContext context) {
+    count++;
+    log('count $count');
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(

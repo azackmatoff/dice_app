@@ -1,20 +1,22 @@
 import 'dart:developer';
 
+import 'package:dice_app/provider/providers/home_page_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dice_app/constants/colors/app_colors.dart';
 import 'package:dice_app/constants/text_styles/app_text_styles.dart';
 import 'package:dice_app/flutter_way/business_logic/home_page_business_logic.dart';
 import 'package:dice_app/widgets/dice_widget.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProviderHomePage extends StatefulWidget {
+  const ProviderHomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _ProviderHomePageState createState() => _ProviderHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProviderHomePageState extends State<ProviderHomePage> {
   /// final, const, var, dynamic
   /// final - runtime constant
   /// const - compile time constant
@@ -42,12 +44,16 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: InkWell(
             onTap: ozgort,
-            child: Row(
-              children: [
-                DiceWidget(diceNumber: homePageBusinessLogic.firstDice),
-                const SizedBox(width: 18),
-                DiceWidget(diceNumber: homePageBusinessLogic.secondDice),
-              ],
+            child: Consumer<HomePageProvider>(
+              builder: (context, provider, child) {
+                return Row(
+                  children: [
+                    DiceWidget(diceNumber: provider.firstDice),
+                    const SizedBox(width: 18),
+                    DiceWidget(diceNumber: provider.secondDice),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -56,8 +62,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void ozgort() {
-    homePageBusinessLogic.ozgort();
-
-    setState(() {});
+    context.read<HomePageProvider>().ozgort();
   }
 }
